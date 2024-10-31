@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "DashboardTesting (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "DashboardTesting (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}
