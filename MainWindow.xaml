@@ -20,8 +20,8 @@
 
         <!-- Dashboard -->
         <Border Grid.Column="0" Background="#333333" Padding="10">
-            <StackPanel x:Name="ButtonStackPanel" Loaded="ButtonStackPanel_Loaded" Spacing="5">
-                <local:CustomButtonControl x:Name="Test" Tag="Panel1Control" Click="TogglePanel" ImageSource="Assets/icon_dashboard.png" Text="Button 1"/>
+            <StackPanel x:Name="ButtonStackPanel" Spacing="5">
+                <local:CustomButtonControl Tag="Panel1Control" Click="TogglePanel" ImageSource="Assets/icon_dashboard.png" Text="Button 1"/>
                 <local:CustomButtonControl Tag="Panel2Control" Click="TogglePanel" ImageSource="Assets/icon_dashboard.png" Text="Button 2"/>
                 <local:CustomButtonControl Tag="Panel3Control" Click="TogglePanel" ImageSource="Assets/icon_dashboard.png" Text="Button 3"/>
                 <local:CustomButtonControl Tag="Panel4Control" Click="TogglePanel" ImageSource="Assets/icon_dashboard.png" Text="Button 4"/>
