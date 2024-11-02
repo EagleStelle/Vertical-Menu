@@ -4,14 +4,13 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
 using System.Collections.Generic;
-using Windows.Foundation;
 
 namespace DashboardTesting
 {
     public sealed partial class MainWindow : Window
     {
         private readonly Dictionary<string, StackPanel> _panelMap;
-        private Button _previousButton;
+        private CustomButtonControl _previousButton;
 
         public MainWindow()
         {
@@ -49,7 +48,7 @@ namespace DashboardTesting
 
         private void TogglePanel(object sender, RoutedEventArgs e)
         {
-            if (sender is Button clickedButton && clickedButton.Tag is string panelName && _panelMap.ContainsKey(panelName))
+            if (sender is CustomButtonControl clickedControl && clickedControl.Tag is string panelName && _panelMap.ContainsKey(panelName))
             {
                 var panelToShow = _panelMap[panelName];
 
@@ -58,7 +57,7 @@ namespace DashboardTesting
                 {
                     // If it's already visible, hide it and remove the selection indicators
                     panelToShow.Visibility = Visibility.Collapsed;
-                    ResetButtonStyle(clickedButton);
+                    ResetButtonStyle(clickedControl);
                     _previousButton = null;  // Reset previous button tracking
                 }
                 else
@@ -78,43 +77,30 @@ namespace DashboardTesting
                         ResetButtonStyle(_previousButton);
                     }
 
-                    // Apply selection style on the clicked button
-                    ApplySelectionStyle(clickedButton);
-                    _previousButton = clickedButton;  // Update previous button tracking
+                    // Apply selection style on the clicked control
+                    ApplySelectionStyle(clickedControl);
+                    _previousButton = clickedControl;  // Update previous button tracking
                 }
             }
         }
 
-        private void ApplySelectionStyle(Button button)
+        private void ApplySelectionStyle(CustomButtonControl button)
         {
-            // Change background color for selection
             button.Background = new SolidColorBrush(Colors.DarkSlateGray);
+            button.TextFontWeight = FontWeights.Bold; // Set text to bold
 
-            // Find TextBlock within the button and set font to bold
-            if (button.Content is StackPanel stackPanel && stackPanel.Children[1] is TextBlock textBlock)
-            {
-                textBlock.FontWeight = FontWeights.Bold;
-            }
-
-            // Add a right-side border to indicate selection
-            button.BorderBrush = new SolidColorBrush(Colors.LightGray);
-            button.BorderThickness = new Thickness(0, 0, 5, 0);
+            // Set the border to indicate selection
+            button.SelectionBorderBrush = new SolidColorBrush(Colors.LightGray);
+            button.SelectionBorderThickness = new Thickness(5, 0, 0, 0); // Adjust as needed
         }
 
-        private void ResetButtonStyle(Button button)
+        private void ResetButtonStyle(CustomButtonControl button)
         {
-            // Reset background color
             button.Background = new SolidColorBrush(Colors.Transparent);
+            button.TextFontWeight = FontWeights.Normal; // Reset text weight
 
-            // Reset TextBlock font weight to normal
-            if (button.Content is StackPanel stackPanel && stackPanel.Children[1] is TextBlock textBlock)
-            {
-                textBlock.FontWeight = FontWeights.Normal;
-            }
-
-            // Reset border
-            button.BorderBrush = null;
-            button.BorderThickness = new Thickness(0);
+            button.SelectionBorderBrush = null;
+            button.SelectionBorderThickness = new Thickness(0);
         }
     }
 }
