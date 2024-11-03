@@ -84,7 +84,7 @@ namespace DashboardTesting
                 {
                     // Reset styles
                     control.MainButton.Background = new SolidColorBrush(Colors.Transparent);
-                    control.ButtonText.FontWeight = FontWeights.Normal;
+                    control.ButtonText.FontWeight = FontWeights.SemiBold;
                     control.MainButton.BorderBrush = null;
                     control.MainButton.BorderThickness = new Thickness(0);
                 }

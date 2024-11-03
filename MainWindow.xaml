@@ -20,6 +20,14 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
+        <Grid.Resources>
+            <Style x:Key="CommonPanelStyle" TargetType="StackPanel">
+                <Setter Property="Visibility" Value="Collapsed" />
+                <Setter Property="Spacing" Value="5" />
+                <Setter Property="Padding" Value="10" />
+            </Style>
+        </Grid.Resources>
+        
         <!-- Custom Title Bar -->
         <Grid Grid.Row="0" Grid.ColumnSpan="3" Background="#222222" VerticalAlignment="Top" Padding="10">
             <Grid.ColumnDefinitions>
@@ -45,24 +53,30 @@
             <Grid Grid.Column="1" HorizontalAlignment="Left"/>
         </Grid>
 
-        <!-- Dashboard - Main Content -->
-        <Border Grid.Row="1" Grid.Column="0" Background="#333333" Padding="10" Width="{Binding ElementName=TitleBar, Path=Width}">
-            <StackPanel x:Name="ButtonStackPanel" Spacing="5">
+        <!-- First Layer - Main Vertical Menu -->
+        <Grid Grid.Row="1" Grid.Column="0" Width="{Binding ElementName=TitleBar, Path=Width}">
+            <StackPanel x:Name="ButtonStackPanel" Style="{StaticResource CommonPanelStyle}" Visibility="Visible" Background="#333333" >
                 <local:CustomButtonControl Tag="Panel1Control" Click="TogglePanel" ImageSource="Assets/icon_dashboard.png" Text="Button 1"/>
                 <local:CustomButtonControl Tag="Panel2Control" Click="TogglePanel" ImageSource="Assets/icon_dashboard.png" Text="Button 2"/>
                 <local:CustomButtonControl Tag="Panel3Control" Click="TogglePanel" ImageSource="Assets/icon_dashboard.png" Text="Button 3"/>
                 <local:CustomButtonControl Tag="Panel4Control" Click="TogglePanel" ImageSource="Assets/icon_dashboard.png" Text="Button 4"/>
             </StackPanel>
-        </Border>
+        </Grid>
 
-        <!-- Toggle Area for StackPanels -->
-        <Grid Grid.Row="1" Grid.Column="1" Background="#FFA500">
-            <StackPanel x:Name="Panel1Control" Background="red" Visibility="Collapsed" Spacing="5" Padding="10">
-                <local:CustomButtonControl IsIndicationEnabled="False" ImageSource="Assets/icon_dashboard.png" Text="Button 1"/>
+        <!-- Second Layer of StackPanels -->
+        <Grid Grid.Row="1" Grid.Column="1">
+            <StackPanel x:Name="Panel1Control" Style="{StaticResource CommonPanelStyle}" Background="Red">
+                <local:CustomButtonControl ImageSource="Assets/icon_dashboard.png" Text="Button A"/>
             </StackPanel>
-            <StackPanel x:Name="Panel2Control" Background="blue" Visibility="Collapsed" MinWidth="200"/>
-            <StackPanel x:Name="Panel3Control" Background="yellow" Visibility="Collapsed" MinWidth="200"/>
-            <StackPanel x:Name="Panel4Control" Background="white" Visibility="Collapsed" MinWidth="200"/>
+            <StackPanel x:Name="Panel2Control" Style="{StaticResource CommonPanelStyle}" Background="Blue">
+                <local:CustomButtonControl ImageSource="Assets/icon_dashboard.png" Text="Button A"/>
+            </StackPanel>
+            <StackPanel x:Name="Panel3Control" Style="{StaticResource CommonPanelStyle}" Background="Yellow">
+                <local:CustomButtonControl ImageSource="Assets/icon_dashboard.png" Text="Button A"/>
+            </StackPanel>
+            <StackPanel x:Name="Panel4Control" Style="{StaticResource CommonPanelStyle}" Background="White">
+                <local:CustomButtonControl ImageSource="Assets/icon_dashboard.png" Text="Button A"/>
+            </StackPanel>
         </Grid>
 
         <!-- Image Preview Area -->
