@@ -9,7 +9,7 @@
             Click="Button_Click">
         <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
             <Image Source="{x:Bind ImageSource, Mode=OneWay}" Width="50" Height="50" Margin="0,0,10,0"/>
-            <TextBlock x:Name="ButtonText" Text="{x:Bind Text, Mode=OneWay}" FontSize="20" VerticalAlignment="Center"/>
+            <TextBlock x:Name="ButtonText" Text="{x:Bind Text, Mode=OneWay}" FontSize="16" FontFamily="Segoe UI" FontWeight="SemiBold" VerticalAlignment="Center"/>
         </StackPanel>
     </Button>
 </UserControl>
