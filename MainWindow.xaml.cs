@@ -1,5 +1,6 @@
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Media;
 using System.Collections.Generic;
 
 namespace DashboardTesting
@@ -8,6 +9,9 @@ namespace DashboardTesting
     {
         private readonly Dictionary<string, StackPanel> _panelMap;
         private CustomButtonControl _previousButton;  // Change type to CustomButtonControl
+
+        private readonly Dictionary<CustomButtonControl, string> _buttonTextMap = new();
+        private bool _isMenuCollapsed = false;  // Track the collapsed state
 
         public MainWindow()
         {
@@ -21,6 +25,55 @@ namespace DashboardTesting
                 { "Panel3Control", Panel3Control },
                 { "Panel4Control", Panel4Control }
             };
+
+            // Initialize button text map for all buttons
+            if (this.Content is DependencyObject content)
+            {
+                InitializeButtonTextMap(content);
+            }
+
+            // Attach HamburgerButton click event
+            HamburgerButton.Click += ToggleMenu;
+        }
+
+        private void InitializeButtonTextMap(DependencyObject parent)
+        {
+            // Recursively find all CustomButtonControls and store their original text
+            int childrenCount = VisualTreeHelper.GetChildrenCount(parent);
+            for (int i = 0; i < childrenCount; i++)
+            {
+                var child = VisualTreeHelper.GetChild(parent, i);
+
+                if (child is CustomButtonControl customButton)
+                {
+                    if (!_buttonTextMap.ContainsKey(customButton))
+                    {
+                        _buttonTextMap[customButton] = customButton.Text; // Save original text
+                    }
+                }
+                else
+                {
+                    // Recursively search child elements
+                    InitializeButtonTextMap(child);
+                }
+            }
+        }
+
+        private void ToggleMenu(object sender, RoutedEventArgs e)
+        {
+            _isMenuCollapsed = !_isMenuCollapsed;
+
+            foreach (var button in _buttonTextMap.Keys)
+            {
+                // Toggle button text visibility
+                button.Text = _isMenuCollapsed ? string.Empty : _buttonTextMap[button];
+
+                // Toggle image margin
+                if (button.FindName("ButtonImage") is Image buttonImage)
+                {
+                    buttonImage.Margin = _isMenuCollapsed ? new Thickness(0) : new Thickness(0, 0, 10, 0);
+                }
+            }
         }
 
         private void TogglePanel(object sender, RoutedEventArgs e)
